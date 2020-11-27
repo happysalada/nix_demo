@@ -17,3 +17,9 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 - initialize it `initdb`
 - create the db `createdb nix_demo_dev`
 
+## testing build tools
+
+- test mix-to-nix with `nix-build ./build_mix_2_nix.nix`
+- test build_mix with `nix-build ./build_mix.nix`
+- test nix-elixir with `nix-build ./build_with_nix_elixir.nix`
+
