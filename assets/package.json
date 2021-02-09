@@ -1,6 +1,8 @@
 {
   "repository": {},
+  "name": "nix_demo",
   "description": " ",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "deploy": "webpack --mode production",
