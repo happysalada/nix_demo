@@ -16,14 +16,12 @@ in packages.buildMix {
   version = "0.0.1";
   depsSha256 = "sha256-YR2N3KzFLj/pHodacEj7CLq1auMAi+m3ONvff9wXOqQ=";
   inherit src;
-  depsPreConfigure = ''
-    export DATABASE_URL="";
-    export SECRET_KEY_BASE="";
-  '';
+  buildEnvVars = {
+    DATABASE_URL="";
+    SECRET_KEY_BASE="";
+  };
   nativeBuildInputs = [ darwin.apple_sdk.frameworks.CoreServices ];
   preConfigure = ''
-    export DATABASE_URL="";
-    export SECRET_KEY_BASE="";
     cd ./assets
 
     ln -s ${nodeDependencies}/lib/node_modules ./node_modules
