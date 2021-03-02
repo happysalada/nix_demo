@@ -1,5 +1,4 @@
 with import ../nixpkgs { };
-
 let
   packages = beam.packagesWith beam.interpreters.erlang;
   src = builtins.fetchGit {
@@ -10,15 +9,16 @@ let
   nodeDependencies =
     (pkgs.callPackage ./assets/default.nix { }).shell.nodeDependencies;
 
-in packages.buildMix {
+in
+packages.buildMix {
   name = "nix_demo";
   mixEnv = "prod";
   version = "0.0.1";
   depsSha256 = "sha256-YR2N3KzFLj/pHodacEj7CLq1auMAi+m3ONvff9wXOqQ=";
   inherit src;
   buildEnvVars = {
-    DATABASE_URL="";
-    SECRET_KEY_BASE="";
+    DATABASE_URL = "";
+    SECRET_KEY_BASE = "";
   };
   nativeBuildInputs = [ darwin.apple_sdk.frameworks.CoreServices ];
   preConfigure = ''
