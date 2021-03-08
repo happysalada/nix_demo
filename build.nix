@@ -6,12 +6,19 @@ let
     rev = "23812c570f43417c2e78f8b91b98947c4fbdcde8";
   };
 
-  nodeDependencies =
-    (pkgs.callPackage ./assets/default.nix { }).shell.nodeDependencies;
-
-
+  mixEnv = "prod";
   name = "nix_demo";
   version = "0.0.1";
+
+  mixDeps = packages.fetchMixDeps {
+    inherit src name mixEnv version;
+    DATABASE_URL = "";
+    SECRET_KEY_BASE = "";
+    sha256 = "sha256-YR2N3KzFLj/pHodacEj7CLq1auMAi+m3ONvff9wXOqQ=";
+  };
+
+  nodeDependencies =
+    (pkgs.callPackage ./assets/default.nix { }).shell.nodeDependencies;
 
   frontEndFiles = stdenvNoCC.mkDerivation {
     name = "frontend-${name}-${version}";
@@ -45,13 +52,10 @@ let
 
 in
 packages.buildMix {
-  mixEnv = "prod";
   depsSha256 = "sha256-YR2N3KzFLj/pHodacEj7CLq1auMAi+m3ONvff9wXOqQ=";
-  inherit src name version;
-  buildEnvVars = {
-    DATABASE_URL = "";
-    SECRET_KEY_BASE = "";
-  };
+  inherit src name version mixEnv mixDeps;
+  DATABASE_URL = "";
+  SECRET_KEY_BASE = "";
   nativeBuildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.CoreServices ];
   preInstall = ''
     mkdir -p ./priv/static
